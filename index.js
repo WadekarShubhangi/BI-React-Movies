@@ -1,5 +1,8 @@
+
+const cors = require("cors");
 const express = require("express");
 const app = express();
+app.use(cors());
 const { initializeDatabase } = require("./db/db.connect");
 const Movie = require("./models/movie.models");
 app.use(express.json());
@@ -48,7 +51,7 @@ app.get("/movies", async (req, res) => {
     if (movies.length != 0) {
       res.json(movies);
     } else {
-      res.json(404).json({ error: "No movies found." });
+      res.status(404).json({ error: "No movies found." });
     }
   } catch (error) {
     res.status(500).json({ error: "Failed to fetch movies." });
